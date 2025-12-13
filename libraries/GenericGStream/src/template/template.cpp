@@ -1,4 +1,4 @@
-#include "Tracking.h"
+#include "template.h"
 
 #include <cstdio>
 
@@ -8,34 +8,34 @@
 
 #include <gst/gst.h>
 
-GST_DEBUG_CATEGORY_STATIC(nntracking_debug_category);
-#define GST_CAT_DEFAULT nntracking_debug_category
+GST_DEBUG_CATEGORY_STATIC(nn_t_debug_category);
+#define GST_CAT_DEFAULT nn_t_debug_category
 
-struct _NNTrackingElementClass {
+struct _NN_TElementClass {
     GstBaseTransformClass parent_class;
 };
 
-struct _NNTrackingElement {
+struct _NN_TElement {
     GstBaseTransform parent_instance;
     struct {
     } properties;
 };
 
-G_DEFINE_TYPE(NNTrackingElement, nntracking_element, GST_TYPE_BASE_TRANSFORM)
+G_DEFINE_TYPE(NN_TElement, nn_t_element, GST_TYPE_BASE_TRANSFORM)
 
 enum { PROP_0, N_PROPERTIES };
 
 static GParamSpec* properties[N_PROPERTIES] = {nullptr};
 
-static void nntracking_element_init(NNTrackingElement* self);
-static gboolean nntracking_element_start(GstBaseTransform* gstBaseTransform);
-static GstFlowReturn nntracking_element_transform_ip(GstBaseTransform* gstBaseTransform, GstBuffer* gstBuffer);
+static void nn_t_element_init(NNInferElement* self);
+static gboolean nn_t_element_start(GstBaseTransform* gstBaseTransform);
+static GstFlowReturn nn_t_element_transform_ip(GstBaseTransform* gstBaseTransform, GstBuffer* gstBuffer);
 static gboolean plugin_init(GstPlugin* gstPlugin);
-static void nntracking_element_set_property(GObject* gObject,
+static void nn_t_element_set_property(GObject* gObject,
                                              guint propertyId,
                                              const GValue* gValue,
                                              GParamSpec* gParamSpec);
-static void nntracking_element_get_property(GObject* gObject,
+static void nn_t_element_get_property(GObject* gObject,
                                              guint propertyId,
                                              GValue* gValue,
                                              GParamSpec* gParamSpec);
@@ -53,8 +53,8 @@ static GstStaticPadTemplate src_template =
                             GST_PAD_ALWAYS,
                             GST_STATIC_CAPS("video/x-raw;video/x-raw(memory:NVMM)"));
 
-void nntracking_element_class_init(NNTrackingElementClass* klass) {
-    GST_DEBUG_CATEGORY_INIT(nntracking_debug_category, "nnoverlay", 0, "NN overlay plugin");
+void nn_t_element_class_init(NNInferElementClass* klass) {
+    GST_DEBUG_CATEGORY_INIT(nninfer_debug_category, "nn_t", 0, "NN overlay plugin");
 
     GstElementClass* gstElementClass = GST_ELEMENT_CLASS(klass);
     GObjectClass* gObjectClass = G_OBJECT_CLASS(klass);
@@ -67,14 +67,14 @@ void nntracking_element_class_init(NNTrackingElementClass* klass) {
     gst_element_class_add_pad_template(gstElementClass, gst_static_pad_template_get(&sink_template));
     gst_element_class_add_pad_template(gstElementClass, gst_static_pad_template_get(&src_template));
 
-    gstBaseTransformClass->transform_ip = GST_DEBUG_FUNCPTR(nntracking_element_transform_ip);
+    gstBaseTransformClass->transform_ip = GST_DEBUG_FUNCPTR(nninfer_element_transform_ip);
 
     gstBaseTransformClass->passthrough_on_same_caps = true;
     gstBaseTransformClass->transform_ip_on_passthrough = true;
-    gstBaseTransformClass->start = nntracking_element_start;
+    gstBaseTransformClass->start = nn_t_element_start;
 
-    gObjectClass->set_property = nntracking_element_set_property;
-    gObjectClass->get_property = nntracking_element_get_property;
+    gObjectClass->set_property = nn_t_element_set_property;
+    gObjectClass->get_property = nn_t_element_get_property;
 
     // properties[PROP_SOURCE_GIE_ID] = g_param_spec_uint("source-gie-id", "Source GIE ID", "Source GIE ID as uint",
     //                                                    0,    // Min
@@ -86,15 +86,15 @@ void nntracking_element_class_init(NNTrackingElementClass* klass) {
 }
 
 
-void nntracking_element_init(NNTrackingElement* self) { GST_DEBUG_OBJECT(self, "init"); }
+void nn_t_element_init(NNInferElement* self) { GST_DEBUG_OBJECT(self, "init"); }
 
-gboolean nntracking_element_start(GstBaseTransform*) { return true; }
+gboolean nn_t_element_start(GstBaseTransform*) { return true; }
 
-void nntracking_element_set_property(GObject* gObject,
+void nn_t_element_set_property(GObject* gObject,
                                       guint propertyId,
                                       const GValue* gValue,
                                       GParamSpec* gParamSpec) {
-    NNTrackingElement* gstSelf = NNTRACKING_ELEMENT(gObject);
+    NN_TElement* gstSelf = NN_T_ELEMENT(gObject);
 
     switch (propertyId) {
     default:
@@ -103,8 +103,8 @@ void nntracking_element_set_property(GObject* gObject,
     }
 }
 
-void nntracking_element_get_property(GObject* gObject, guint propertyId, GValue* gValue, GParamSpec* gParamSpec) {
-    NNTrackingElement* gstSelf = NNTRACKING_ELEMENT(gObject);
+void nn_t_element_get_property(GObject* gObject, guint propertyId, GValue* gValue, GParamSpec* gParamSpec) {
+    NNInferElement* gstSelf = NN_T_ELEMENT(gObject);
 
     switch (propertyId) {
     default:
@@ -113,21 +113,21 @@ void nntracking_element_get_property(GObject* gObject, guint propertyId, GValue*
     }
 }
 
-GstFlowReturn nntracking_element_transform_ip(GstBaseTransform* gstBaseTransform, GstBuffer* gstBuffer) {
-    NNTrackingElement* gstSelf = NNTRACKING_ELEMENT(gstBaseTransform);
+GstFlowReturn nn_t_element_transform_ip(GstBaseTransform* gstBaseTransform, GstBuffer* gstBuffer) {
+    NN_TElement* gstSelf = NN_T_ELEMENT(gstBaseTransform);
 
     return GST_FLOW_OK;
 }
 
 gboolean plugin_init(GstPlugin* gstPlugin) {
-    return gst_element_register(gstPlugin, "nntracking", GST_RANK_NONE, NNTRACKING_TYPE_ELEMENT);
+    return gst_element_register(gstPlugin, "nn_t", GST_RANK_NONE, NNINFER_TYPE_ELEMENT);
 }
 
 #define PACKAGE "nnpackage"
 
 GST_PLUGIN_DEFINE(GST_VERSION_MAJOR,
                   GST_VERSION_MINOR,
-                  nntracking,
+                  nn_t,
                   "NN overlay plugin",
                   plugin_init,
                   "1.0",

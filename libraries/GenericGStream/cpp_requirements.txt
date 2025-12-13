@@ -1,0 +1,5 @@
+sudo apt install libjsoncpp-dev -y
+sudo apt install -y libjson-glib-dev
+sudo apt install -y libyaml-cpp-dev
+sudo apt install libcurl4-openssl-dev
+sudo apt install libopencv-dev -y
