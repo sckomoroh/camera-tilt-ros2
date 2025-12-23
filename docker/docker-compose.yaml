@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  ros2:
+    container_name: ros2-humble-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty: true          # чтобы работал интерактивный bash
+    stdin_open: true
+    working_dir: /app
+
+    # Монтируем локальный workspace
+    volumes:
+      - ../app:/app
+
+    environment:
+      # Можно поменять, если будешь использовать CycloneDDS и т.п.
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+      - ROS_DOMAIN_ID=0
+      # Для GUI (rviz и т.п., если будешь пробрасывать X11)
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+
+    # Обычная bridge-сеть (на Mac host network не работает)
+    network_mode: host
+    command: ['/bin/bash']
+
+    # Если нужно больше прав внутри контейнера (обычно не нужно на Mac)
+    privileged: true

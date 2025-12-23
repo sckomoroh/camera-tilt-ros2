@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot name="waveshare_pan_tilt" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:include filename="$(find camera_description)/urdf/robot.urdf"/>
+    <ros2_control name="robot_motors_control" type="system">
+        <hardware>
+            <plugin>tilt_hw/TiltHWInterface</plugin>
+            <param name="tilt_joint">pt_tilt_joint</param>
+            <param name="camera_joint">pt_camera_joint</param>
+        </hardware>
+        <joint name="pt_tilt_joint">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <!-- <state_interface name="velocity" /> -->
+        </joint>
+        <joint name="pt_camera_joint">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <!-- <state_interface name="velocity" /> -->
+        </joint>
+    </ros2_control>
+</robot>

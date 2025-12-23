@@ -1,0 +1,9 @@
+<library path="tilt_hw">
+  <class name="tilt_hw/TiltHWInterface"
+         type="tilt::hw::interface::TiltHWInterface"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      TBD
+    </description>
+  </class>
+</library>

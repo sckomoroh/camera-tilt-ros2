@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="base_link"/>
+
+  <!-- подключаем наш модуль -->
+  <xacro:include filename="$(find camera_description)/urdf/camera-tilt.urdf.xacro"/>
+
+  <!-- крепим пан-тилт к base_link -->
+  <xacro:camera_tilt parent="base_link" prefix="pt_"/>
+
+</robot>
