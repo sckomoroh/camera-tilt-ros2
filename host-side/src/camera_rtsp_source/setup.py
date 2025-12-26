@@ -24,6 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'camera_node = camera_node.node:main',
+            'frame_provider = camera_rtsp_source.frame_provider:main',
         ],
     },
 )
