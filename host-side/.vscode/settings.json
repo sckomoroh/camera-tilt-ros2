@@ -1,0 +1,19 @@
+{
+    "cmake.sourceDirectory": "/ws/src/tilt_hw",
+    "python.autoComplete.extraPaths": [
+        "/ws/install/esp_msgs/lib/python3.12/site-packages",
+        "/ws/build/camera_node",
+        "/ws/install/camera_node/lib/python3.12/site-packages",
+        "/ws/build/bringup",
+        "/ws/install/bringup/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/ws/install/esp_msgs/lib/python3.12/site-packages",
+        "/ws/build/camera_node",
+        "/ws/install/camera_node/lib/python3.12/site-packages",
+        "/ws/build/bringup",
+        "/ws/install/bringup/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}
