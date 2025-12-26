@@ -1,0 +1,2 @@
+float32 tilt_rad
+float32 camera_rad

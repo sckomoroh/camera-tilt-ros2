@@ -1,0 +1,17 @@
+{
+  "name": "PlatformIO ESP32",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "postCreateCommand": "pip3 install -U platformio && pio pkg update",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "platformio.platformio-ide",
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

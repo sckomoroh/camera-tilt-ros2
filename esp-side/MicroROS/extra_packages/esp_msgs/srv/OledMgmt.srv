@@ -1,0 +1,6 @@
+char[32] line1
+char[32] line2
+char[32] line3
+char[32] line4
+---
+bool success
