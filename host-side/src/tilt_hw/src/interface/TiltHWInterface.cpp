@@ -27,7 +27,7 @@ hardware_interface::CallbackReturn TiltHWInterface::on_init(
     mJoints[Joint::TILT].name = mInfo.hardware_info.hardware_parameters[TILT_JOINT_NAME];
     mJoints[Joint::CAMERA].name = mInfo.hardware_info.hardware_parameters[CAMERA_JOINT_NAME];
 
-    RCLCPP_INFO(get_logger(), "on_init: Tile '%s' Pan '%s'", mJoints[Joint::TILT].name.c_str(),
+    RCLCPP_INFO(get_logger(), "on_init: Tile '%s' Camera '%s'", mJoints[Joint::TILT].name.c_str(),
                 mJoints[Joint::CAMERA].name.c_str());
 
     executor.add_node(node->get_node_base_interface());

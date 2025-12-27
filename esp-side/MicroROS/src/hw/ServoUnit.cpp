@@ -7,10 +7,10 @@
 #define GIMBAL_TILT_ID 2    // 360
 #define GIMBAL_CAMERA_ID 1  // Vertical move
 
-static constexpr float TILT_MIN = -M_PI;    // -180 degrees
-static constexpr float TILT_MAX = +M_PI;    // +180 degrees
-static constexpr float CAMERA_MIN = -M_PI_2;  // -90 degrees
-static constexpr float CAMERA_MAX = 0.52359878f;   // +30 degrees
+static constexpr float TILT_MIN = -M_PI;          // -180 degrees
+static constexpr float TILT_MAX = +M_PI;          // +180 degrees
+static constexpr float CAMERA_MIN = -M_PI_2;      // -90 degrees
+static constexpr float CAMERA_MAX = 0.52359878f;  // +30 degrees
 
 struct ServoFeedback {
     bool status;
@@ -48,7 +48,7 @@ ServoUnitFeedback ServoUnit::processFeedback() {
 }
 
 void ServoUnit::processServosSet(const float& tilt_angle_rad, const float& camera_angle_rad) {
-    setServoAngles(camera_angle_rad, tilt_angle_rad);
+    setServoAngles(tilt_angle_rad, camera_angle_rad);
 }
 
 void ServoUnit::init() {
