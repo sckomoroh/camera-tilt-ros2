@@ -34,7 +34,7 @@ private:
     bool getFeedback(byte servoID);
     int16_t angleToPos(float angle_rad, float radMin, float radMax);
     float clampf(float v, float lo, float hi);
-    void setServoAngles(float tiltAngleRad, float cameraAngleRad, uint16_t speed = 1600, uint8_t acc = 50);
+    void setServoAngles(float tiltAngleRad, float cameraAngleRad, uint16_t speed = 1600, uint8_t acc = 100);
     float posToAngle(int pos, float radMin = -3.14159265f, float radMax = 3.14159265f);
 };
 

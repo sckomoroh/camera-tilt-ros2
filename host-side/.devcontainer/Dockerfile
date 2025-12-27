@@ -1,4 +1,4 @@
-FROM ros:jazzy-ros-base
+FROM osrf/ros:jazzy-desktop
 
 SHELL ["/bin/bash", "-lc"]
 

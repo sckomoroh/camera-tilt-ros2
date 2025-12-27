@@ -21,9 +21,9 @@ BridgeNode::Data BridgeNode::getStatus() const {
     return data;
 }
 
-void BridgeNode::setAngles(float pan, float camera) {
+void BridgeNode::setAngles(float tilt, float camera) {
     esp_msgs::msg::ServoCommand msg;
-    msg.tilt_rad = pan;
+    msg.tilt_rad = tilt;
     msg.camera_rad = camera;
     commandPublisher->publish(msg);
 }

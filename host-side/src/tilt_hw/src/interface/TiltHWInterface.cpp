@@ -106,12 +106,6 @@ hardware_interface::return_type TiltHWInterface::read(const rclcpp::Time& /*time
 
 hardware_interface::return_type TiltHWInterface::write(const rclcpp::Time& /*time*/,
                                                        const rclcpp::Duration& /*period*/) {
-    if (mJoints[Joint::TILT].position_cmd > 0.001 || mJoints[Joint::TILT].position_cmd < -0.001 ||
-        mJoints[Joint::CAMERA].position_cmd > 0.001 || mJoints[Joint::CAMERA].position_cmd < -0.001) {
-        RCLCPP_INFO(get_logger(), "write: Tilt=%.3f Camera=%.3f", mJoints[Joint::TILT].position_cmd,
-                    mJoints[Joint::CAMERA].position_cmd);
-    }
-
     node->setAngles(static_cast<float>(mJoints[Joint::TILT].position_cmd),
                     static_cast<float>(mJoints[Joint::CAMERA].position_cmd));
 

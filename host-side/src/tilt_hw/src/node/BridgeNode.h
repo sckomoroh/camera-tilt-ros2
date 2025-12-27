@@ -24,7 +24,7 @@ public:
     BridgeNode();
 
 public:
-    void setAngles(float pan, float camera);
+    void setAngles(float tilt, float camera);
     Data getStatus() const;
 
 private:
