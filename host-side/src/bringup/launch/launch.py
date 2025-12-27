@@ -21,6 +21,12 @@ def generate_launch_description():
         value_type=str
     )
 
+    frame_provider = Node(
+        package='camera_rtsp_source',
+        executable='frame_provider',
+        output='screen',
+    )
+
     rsp = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -70,4 +76,5 @@ def generate_launch_description():
         control_node,
         joint_state_broadcaster_spawner,
         trajectory_controller_spawner,
+        frame_provider,
     ])
