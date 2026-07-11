@@ -9,8 +9,10 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/ws,type=bind,consistency=cached",
   "runArgs": [
     "--net=host",
-    "-e",
-    "DISPLAY=${env:DISPLAY}"
+    "--runtime=nvidia",
+    "-e", "NVIDIA_VISIBLE_DEVICES=all",
+    "-e", "NVIDIA_DRIVER_CAPABILITIES=compute,video,utility",
+    "-e", "DISPLAY=${env:DISPLAY}"
   ],
   "customizations": {
     "vscode": {

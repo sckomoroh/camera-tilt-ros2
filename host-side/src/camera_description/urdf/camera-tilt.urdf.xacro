@@ -13,6 +13,29 @@
   <xacro:property name="pivot_cam_z" value="0.054"/>
 
   <xacro:macro name="camera_tilt" params="parent prefix">
+    <link name="${prefix}root_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" iyy="0.001" izz="0.001"
+                 ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.2 0.2 0.01"/>
+        </geometry>
+        <material name="root_color">
+          <color rgba="0.4 0.2 0.2 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.2 0.2 0.01"/>
+        </geometry>
+      </collision>
+    </link>
     <!-- ========== PAN ========== -->
     <link name="${prefix}pan_link">
       <visual>
@@ -40,7 +63,7 @@
       </inertial>
     </link>
     <joint name="${prefix}pan_joint" type="fixed">
-      <parent link="${parent}"/>
+      <parent link="${prefix}root_link"/>
       <child  link="${prefix}pan_link"/>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
@@ -116,6 +139,12 @@
       <axis xyz="1 0 0"/>
       <limit lower="-1.5708" upper="0.7854" effort="5" velocity="3"/>
       <dynamics damping="0.1" friction="0.0"/>
+    </joint>
+
+    <joint name="${prefix}camera_fixed_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child  link="${prefix}root_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
   </xacro:macro>
 </robot>

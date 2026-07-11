@@ -21,15 +21,34 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-jazzy-hardware-interface \
     ros-jazzy-controller-manager \
     && rm -rf /var/lib/apt/lists/*
+    
+RUN pip install ultralytics --no-cache-dir
+
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN apt-get update && sudo apt install -y \
+    python3-gi \
+    python3-gst-1.0 \
+    gir1.2-gstreamer-1.0 \
+    gir1.2-gst-rtsp-server-1.0 \
+    ros-jazzy-xacro \
+    gstreamer1.0-tools \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-ugly \
+    gstreamer1.0-libav \
+    && rm -rf /var/lib/apt/lists/*
+
 
 RUN echo "ubuntu ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu \
     && chmod 0440 /etc/sudoers.d/ubuntu
-# RUN echo "=== USERS ===" && cat /etc/passwd
 
 USER ubuntu
 WORKDIR /ws    
 
-RUN rosdep init || true
-RUN rosdep update
+# RUN rosdep init || true
+# RUN rosdep update
 
-RUN echo "source /opt/ros/jazzy/setup.bash" >> /home/ubuntu/.bashrc
+# RUN echo "source /opt/ros/jazzy/setup.bash" >> /home/ubuntu/.bashrc
